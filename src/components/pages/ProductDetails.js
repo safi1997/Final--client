@@ -1,9 +1,31 @@
-import React from "react";
-import MyNavbar from "./Navbar";
-function App() {
+import React, { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+
+function ProductDetails() {
+
+  let { productId } = useParams();
+
+  const [product, setProduct] = React.useState({});
+
+  useEffect(() => {
+    fetchProductDetails(productId);
+  }, [productId]);
+
+  const fetchProductDetails = async (productId) => {
+    const response = await fetch(`http://localhost:9000/api/products/${productId}`);
+    const data = await response.json();
+
+    setProduct(data);
+  };
+
+
+
+
   return (
     <div>
       <section id="prodetails" className="section-p1">
+        <h1>{product.name}</h1>
         <div className="single-pro-image">
           <img
             src="asstes/img/09/REEBOK-K-NIGLICHE-KLASSISCHEN-JOGGER-2-trainer-4.jpg"
@@ -190,4 +212,4 @@ function App() {
   );
 }
 
-export default App;
+export default ProductDetails;

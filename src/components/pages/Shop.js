@@ -1,7 +1,7 @@
 import React from "react";
 import NewsletterSignup from "./Newsleter";
 
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { faStar, faCartPlus } from "@fortawesome/free-solid-svg-icons";
@@ -14,6 +14,23 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 
 export default function Shop() {
+
+  // create an async functions to get all produts from the backend
+  const [products, setProducts] = React.useState([]);
+
+  React.useEffect(() => {
+    async function getProducts() {
+      try {
+        const response = await fetch("http://localhost:9000/api/products");
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getProducts();
+  }, []);
+
   return (
     <div>
       <section id="page-header" className="small shadow">
@@ -28,9 +45,35 @@ export default function Shop() {
       {/*    Start the first Product Section */}
       <section id="product1" className="section-p1 Larger shadow">
         <div className="pro_container">
+
+          {products.map((product)=>
+              <Link to={`/productdetails/${product.id}`}>
+              <div
+                className="pro">
+                <img src={require("./img/10/product16.jpg")} alt="Product1" />
+                <div className="des">
+                  <span>Schuhe</span>
+                  <h5>frauen Sport Laufschuhe</h5>
+                  <div className="star">s
+                    <FontAwesomeIcon icon={faStar} />
+                    <FontAwesomeIcon icon={faStar} />
+                    <FontAwesomeIcon icon={faStar} />
+                    <FontAwesomeIcon icon={faStar} />
+                    <FontAwesomeIcon icon={faStar} />
+                  </div>
+                  <h4>{product.price} CHF</h4>
+                </div>
+                <NavLink to="#">
+                  <FontAwesomeIcon className=" cart" icon={faCartPlus} />
+                  <FontAwesomeIcon className=" cart" icon={faCartPlus} />
+                </NavLink>
+              </div>
+              </Link>
+          )}
+
+
           <div
-            className="pro"
-            onClick={() => (window.location.href = "smal-product.js")}>
+            className="pro">
             <img src={require("./img/10/product16.jpg")} alt="Product1" />
             <div className="des">
               <span>Schuhe</span>

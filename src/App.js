@@ -8,8 +8,8 @@ import About from "./components/pages/About";
 import Contact from "./components/pages/Contact";
 import Blog from "./components/pages/Blog";
 import Cart from "./components/pages/Cart";
-import CartPage from "./components/pages/CartPage";
 import Profile from "./components/login/Profile";
+import ProductDetails from "./components/pages/ProductDetails";
 
 function App() {
   const { isLoading } = useAuth0();
@@ -26,6 +26,7 @@ function App() {
           <Route path="/Blog" element={<Blog />} />
           <Route path="/Cart" element={<Cart />} />
           <Route path="/Profile" element={<Profile />} />
+          <Route path="/product-details/:productId" element={<ProductDetails/>} />
         </Routes>
       </Router>
     </>
